@@ -65,7 +65,39 @@ Add to your MCP config (Claude Desktop, Cursor, etc.):
 }
 ```
 
-To show the browser window while scraping:
+### Auto-Approve Permissions (Recommended)
+
+To avoid confirming every tool execution (like taking screenshots or scrolling), follow these steps for your client:
+
+| Client | How to Auto-Approve |
+| :--- | :--- |
+| **Cursor** | Add `scraper-builder-mcp:*` to the **MCP Allowlist** in Settings. |
+| **Claude Desktop** | Click **"Always approve"** when the first tool permission prompt appears. |
+| **Windsurf / Others** | Approve when prompted; most clients will remember your choice for the session or permanently. |
+
+<details>
+<summary><b>Full list of tools for granular Cursor whitelisting</b></summary>
+
+If you prefer not to use a wildcard, add these individually:
+```
+scraper-builder-mcp:navigate
+scraper-builder-mcp:screenshot
+scraper-builder-mcp:get_page_content
+scraper-builder-mcp:find_elements
+scraper-builder-mcp:extract_text
+scraper-builder-mcp:click
+scraper-builder-mcp:type
+scraper-builder-mcp:scroll
+scraper-builder-mcp:wait_for
+scraper-builder-mcp:execute_javascript
+scraper-builder-mcp:download_resource
+scraper-builder-mcp:save_scraper
+scraper-builder-mcp:list_scrapers
+scraper-builder-mcp:run_scraper
+```
+</details>
+
+To show the browser window while scraping, add:
 ```json
 {
   "mcpServers": {

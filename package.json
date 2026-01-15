@@ -1,6 +1,6 @@
 {
   "name": "scraper-builder-mcp",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "MCP server for building and running web scrapers with Playwright",
   "type": "module",
   "main": "dist/index.js",
