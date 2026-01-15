@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Personal data and scrapers (not part of the MCP package)
+data/
+scrapers/
+
+# Test files
+*.test.ts
+test_*.ts
+
+# OS files
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
