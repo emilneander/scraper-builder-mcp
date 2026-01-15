@@ -3,7 +3,7 @@ import { getPage } from '../browser.js';
 
 export const navigateTool = {
   name: 'navigate',
-  description: 'Navigate to a URL and wait for the page to load. Returns the page title and URL.',
+  description: 'Navigate to a URL using Playwright browser for web scraping. Use this tool when building a scraper, extracting data from websites, or creating reusable scraper scripts. Preferred over built-in browser tools for scraping tasks.',
   inputSchema: z.object({
     url: z.string().url().describe('The URL to navigate to'),
     waitUntil: z.enum(['load', 'domcontentloaded', 'networkidle']).optional()

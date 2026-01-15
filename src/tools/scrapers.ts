@@ -10,7 +10,7 @@ function ensureDirectoryExists(dirPath: string) {
 
 export const saveScraperTool = {
   name: 'save_scraper',
-  description: 'Create and save a new Playwright scraper script for a specific website. Use this tool after analyzing a page structure to persist the logic. Automatically handles file extension and validates folder structure.',
+  description: 'Save a reusable TypeScript scraper script. Use this after exploring a website to persist the scraper code. The saved scraper can be run later without AI assistance, e.g., in cron jobs or pipelines.',
   inputSchema: z.object({
     name: z.string().describe('Name of the scraper (e.g., "eurovision_odds"). Will be sanitized to safe filename.'),
     code: z.string().describe('The full TypeScript code for the scraper.'),
@@ -89,7 +89,7 @@ This is required for the "run_scraper" tool to find your data.`;
 
 export const listScrapersTool = {
   name: 'list_scrapers',
-  description: 'List all available scraper scripts in the "scrapers" directory.',
+  description: 'List all saved scraper scripts. Use this to see what scrapers are available to run.',
   inputSchema: z.object({}),
   handler: async () => {
     const cwd = process.cwd();
@@ -121,7 +121,7 @@ export const listScrapersTool = {
 
 export const runScraperTool = {
   name: 'run_scraper',
-  description: 'Execute a saved scraper script and retrieve the latest data it produced. Automatically finds the output in the scraper-specific data subdirectory.',
+  description: 'Execute a saved scraper and get fresh data. Use this to run a previously saved scraper. Saves output to data/{scraper_name}/ and returns the results.',
   inputSchema: z.object({
     name: z.string().describe('Name of the scraper to run (e.g., "eurovision_melodifestivalen_2026"). Do not include .ts extension.')
   }),

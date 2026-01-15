@@ -91,19 +91,19 @@ Then point your MCP config to `dist/index.js`.
 
 | Tool | Description |
 |------|-------------|
-| `save_scraper` | Save a TypeScript scraper to `scrapers/` |
+| `save_scraper` | Save a reusable TypeScript scraper script |
 | `list_scrapers` | List all saved scrapers |
-| `run_scraper` | Execute a saved scraper and get results |
+| `run_scraper` | Execute a saved scraper and get fresh data |
 
 ### Browser Automation
 
 | Tool | Description |
 |------|-------------|
-| `navigate` | Go to a URL |
-| `screenshot` | Capture page as image for AI analysis |
-| `get_page_content` | Get HTML or simplified DOM structure |
-| `find_elements` | Query DOM with CSS selectors |
-| `extract_text` | Get text content from elements |
+| `navigate` | Go to a URL for web scraping |
+| `screenshot` | Capture page for visual analysis |
+| `get_page_content` | Get HTML or simplified DOM for finding selectors |
+| `find_elements` | Test CSS selectors and verify matches |
+| `extract_text` | Preview data extraction results |
 | `click` | Click on an element |
 | `type` | Type into input fields |
 | `scroll` | Scroll the page (handles lazy loading) |

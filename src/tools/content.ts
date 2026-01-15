@@ -3,7 +3,7 @@ import { getPage, hasActivePage } from '../browser.js';
 
 export const getPageContentTool = {
   name: 'get_page_content',
-  description: 'Get the HTML content of the current page. Can return full HTML or a simplified DOM structure.',
+  description: 'Get HTML or simplified DOM structure for scraper development. Use simplified mode to analyze page structure when building a scraper. Essential for finding CSS selectors and understanding data layout.',
   inputSchema: z.object({
     simplified: z.boolean().optional()
       .describe('If true, returns a simplified DOM tree with just tag names, classes, IDs, and text snippets. Default: false'),

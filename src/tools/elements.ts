@@ -3,7 +3,7 @@ import { getPage, hasActivePage } from '../browser.js';
 
 export const findElementsTool = {
   name: 'find_elements',
-  description: 'Find elements matching a CSS selector. Returns information about each element including tag, text, attributes, and position.',
+  description: 'Find elements matching a CSS selector for scraper development. Use this to test selectors and verify they match the data you want to extract. Returns element details including text, attributes, and position.',
   inputSchema: z.object({
     selector: z.string().describe('CSS selector to find elements'),
     limit: z.number().optional().describe('Maximum number of elements to return. Default: 20')
@@ -58,7 +58,7 @@ export const findElementsTool = {
 
 export const extractTextTool = {
   name: 'extract_text',
-  description: 'Extract text content from elements matching a CSS selector. Returns an array of text strings.',
+  description: 'Extract text content from elements for scraper development. Use this to preview what data your scraper will extract before saving the scraper script.',
   inputSchema: z.object({
     selector: z.string().describe('CSS selector to find elements'),
     limit: z.number().optional().describe('Maximum number of elements. Default: 50'),
