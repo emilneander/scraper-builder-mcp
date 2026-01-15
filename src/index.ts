@@ -152,7 +152,7 @@ server.tool(
   listScrapersTool.description,
   listScrapersTool.inputSchema.shape,
   async (params) => {
-    const result = await listScrapersTool.handler();
+    const result = await listScrapersTool.handler(params as { directory?: string });
     return { content: [{ type: 'text' as const, text: JSON.stringify(result, null, 2) }] };
   }
 );

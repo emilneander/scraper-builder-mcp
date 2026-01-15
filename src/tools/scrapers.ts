@@ -10,16 +10,17 @@ function ensureDirectoryExists(dirPath: string) {
 
 export const saveScraperTool = {
   name: 'save_scraper',
-  description: 'Save a reusable TypeScript scraper script. Use this after exploring a website to persist the scraper code. The saved scraper can be run later without AI assistance, e.g., in cron jobs or pipelines.',
+  description: 'Save a reusable TypeScript scraper script. After saving, ALWAYS use run_scraper to test it and fix any issues. Files are saved to the user\'s project root.',
   inputSchema: z.object({
     name: z.string().describe('Name of the scraper (e.g., "eurovision_odds"). Will be sanitized to safe filename.'),
     code: z.string().describe('The full TypeScript code for the scraper.'),
+    directory: z.string().optional().describe('Optional: absolute path to save scrapers. Defaults to user\'s project root.'),
     overwrite: z.boolean().optional().describe('Overwrite existing scraper if it exists. Default: false')
   }),
-  handler: async (params: { name: string; code: string; overwrite?: boolean }) => {
-    const cwd = process.cwd();
-    const scrapersDir = path.join(cwd, 'scrapers');
-    const dataDir = path.join(cwd, 'data');
+  handler: async (params: { name: string; code: string; directory?: string; overwrite?: boolean }) => {
+    const baseDir = params.directory || process.cwd();
+    const scrapersDir = path.join(baseDir, 'scrapers');
+    const dataDir = path.join(baseDir, 'data');
 
     // Ensure directories exist
     ensureDirectoryExists(scrapersDir);
@@ -90,10 +91,12 @@ This is required for the "run_scraper" tool to find your data.`;
 export const listScrapersTool = {
   name: 'list_scrapers',
   description: 'List all saved scraper scripts. Use this to see what scrapers are available to run.',
-  inputSchema: z.object({}),
-  handler: async () => {
-    const cwd = process.cwd();
-    const scrapersDir = path.join(cwd, 'scrapers');
+  inputSchema: z.object({
+    directory: z.string().optional().describe('Optional: absolute path where scrapers are stored. Defaults to user\'s project root.')
+  }),
+  handler: async (params: { directory?: string }) => {
+    const baseDir = params.directory || process.cwd();
+    const scrapersDir = path.join(baseDir, 'scrapers');
 
     if (!fs.existsSync(scrapersDir)) {
       return {
@@ -121,13 +124,14 @@ export const listScrapersTool = {
 
 export const runScraperTool = {
   name: 'run_scraper',
-  description: 'Execute a saved scraper and get fresh data. Use this to run a previously saved scraper. Saves output to data/{scraper_name}/ and returns the results.',
+  description: 'Execute a saved scraper and get fresh data. ALWAYS run this after save_scraper to verify the scraper works correctly.',
   inputSchema: z.object({
-    name: z.string().describe('Name of the scraper to run (e.g., "eurovision_melodifestivalen_2026"). Do not include .ts extension.')
+    name: z.string().describe('Name of the scraper to run (e.g., "eurovision_melodifestivalen_2026"). Do not include .ts extension.'),
+    directory: z.string().optional().describe('Optional: absolute path where scrapers are stored. Defaults to user\'s project root.')
   }),
-  handler: async (params: { name: string }) => {
-    const cwd = process.cwd();
-    const scrapersDir = path.join(cwd, 'scrapers');
+  handler: async (params: { name: string; directory?: string }) => {
+    const baseDir = params.directory || process.cwd();
+    const scrapersDir = path.join(baseDir, 'scrapers');
     const safeName = params.name.replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
     const scriptPath = path.join(scrapersDir, `${safeName}.ts`);
 
@@ -149,7 +153,7 @@ export const runScraperTool = {
         });
 
         // Find the latest data file
-        const dataDir = path.join(cwd, 'data', safeName);
+        const dataDir = path.join(baseDir, 'data', safeName);
         if (!fs.existsSync(dataDir)) {
              return {
                 success: true,

@@ -12,18 +12,24 @@ Other browser MCPs help AI extract data once. This one saves **reusable TypeScri
 
 Just describe what you want and provide a JSON schema:
 
-> "Create a scraper for https://example.com/jobs  
+> "**Use scraper-builder-mcp** to create a scraper for https://example.com/jobs  
 > Extract data matching this schema:
 > ```json
 > { "title": "string", "company": "string", "location": "string", "url": "string" }
 > ```
-> Save it as `example_jobs`"
+> Save it as `example_jobs` and run it to verify it works"
 
 The AI will:
 1. Navigate to the page and take a screenshot
 2. Explore the DOM to find the right selectors
 3. Write a TypeScript scraper that outputs your schema
-4. Save it for reuse
+4. Save it to your project folder
+5. Run it to verify it works (and fix if needed)
+
+**Tips:**
+- If your IDE has built-in browser tools, say **"use scraper-builder-mcp"** explicitly
+- Scrapers save to `scrapers/` and data to `data/` in your **project root**
+- Always ask the AI to run the scraper after saving to catch issues early
 
 ### Running a Saved Scraper
 
