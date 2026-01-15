@@ -4,13 +4,7 @@ Build, save, and run web scrapers with AI assistance. An MCP server that lets AI
 
 ## Why This MCP?
 
-Other browser MCPs help AI extract data once. This one creates **reusable scrapers** you can:
-
-- Run on a **cron job** for automated data collection
-- Execute in **CI/CD pipelines** for testing or monitoring
-- Use in your own scripts for **production workflows**
-- Modify and maintain as the target website changes
-
+Other browser MCPs help AI extract data once. This one saves **reusable TypeScript scrapers** you can run anytime — in scripts, cron jobs, or pipelines.
 
 ## Usage Examples
 
