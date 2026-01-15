@@ -28,7 +28,7 @@ The AI will:
 
 **Tips:**
 - If your IDE has built-in browser tools, say **"use scraper-builder-mcp"** explicitly
-- Scrapers save to `scrapers/` and data to `data/` in your **project root**
+- Scrapers save to `scrapers/` and data to `data/` in the **current project's root directory**
 - Always ask the AI to run the scraper after saving to catch issues early
 
 ### Running a Saved Scraper

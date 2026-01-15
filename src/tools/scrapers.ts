@@ -10,11 +10,11 @@ function ensureDirectoryExists(dirPath: string) {
 
 export const saveScraperTool = {
   name: 'save_scraper',
-  description: 'Save a reusable TypeScript scraper script. After saving, ALWAYS use run_scraper to test it and fix any issues. Files are saved to the user\'s project root.',
+  description: 'Save a reusable TypeScript scraper script. After saving, ALWAYS use run_scraper to test it and fix any issues. Files are saved to the current project\'s root directory by default.',
   inputSchema: z.object({
     name: z.string().describe('Name of the scraper (e.g., "eurovision_odds"). Will be sanitized to safe filename.'),
     code: z.string().describe('The full TypeScript code for the scraper.'),
-    directory: z.string().optional().describe('Optional: absolute path to save scrapers. Defaults to user\'s project root.'),
+    directory: z.string().optional().describe('Optional: absolute path to save scrapers. Defaults to the current project\'s root directory.'),
     overwrite: z.boolean().optional().describe('Overwrite existing scraper if it exists. Default: false')
   }),
   handler: async (params: { name: string; code: string; directory?: string; overwrite?: boolean }) => {
@@ -92,7 +92,7 @@ export const listScrapersTool = {
   name: 'list_scrapers',
   description: 'List all saved scraper scripts. Use this to see what scrapers are available to run.',
   inputSchema: z.object({
-    directory: z.string().optional().describe('Optional: absolute path where scrapers are stored. Defaults to user\'s project root.')
+    directory: z.string().optional().describe('Optional: absolute path where scrapers are stored. Defaults to the current project\'s root directory.')
   }),
   handler: async (params: { directory?: string }) => {
     const baseDir = params.directory || process.cwd();
@@ -127,7 +127,7 @@ export const runScraperTool = {
   description: 'Execute a saved scraper and get fresh data. ALWAYS run this after save_scraper to verify the scraper works correctly.',
   inputSchema: z.object({
     name: z.string().describe('Name of the scraper to run (e.g., "eurovision_melodifestivalen_2026"). Do not include .ts extension.'),
-    directory: z.string().optional().describe('Optional: absolute path where scrapers are stored. Defaults to user\'s project root.')
+    directory: z.string().optional().describe('Optional: absolute path where scrapers are stored. Defaults to the current project\'s root directory.')
   }),
   handler: async (params: { name: string; directory?: string }) => {
     const baseDir = params.directory || process.cwd();
