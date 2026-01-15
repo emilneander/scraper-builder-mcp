@@ -10,9 +10,9 @@ function ensureDirectoryExists(dirPath: string) {
 
 export const saveScraperTool = {
   name: 'save_scraper',
-  description: 'Save a reusable TypeScript scraper script. After saving, ALWAYS use run_scraper to test it and fix any issues. Files are saved to the current project\'s root directory by default.',
+  description: 'Save a reusable TypeScript scraper script. After saving, ALWAYS use run_scraper to test it. IMPORTANT: The AI should check its current project path (e.g. via pwd or file paths) and pass it to the "directory" parameter to ensure the scraper is saved in the correct project folder.',
   inputSchema: z.object({
-    name: z.string().describe('Name of the scraper (e.g., "eurovision_odds"). Will be sanitized to safe filename.'),
+    name: z.string().describe('Name of the scraper (e.g., "worldcup_odds"). Will be sanitized to safe filename.'),
     code: z.string().describe('The full TypeScript code for the scraper.'),
     directory: z.string().optional().describe('Optional: absolute path to save scrapers. Defaults to the current project\'s root directory.'),
     overwrite: z.boolean().optional().describe('Overwrite existing scraper if it exists. Default: false')
@@ -77,7 +77,8 @@ This is required for the "run_scraper" tool to find your data.`;
         success: true,
         message: `Scraper saved to ${filePath}`,
         validation_status: validation,
-        path: filePath
+        path: filePath,
+        current_working_directory: baseDir
       };
     } catch (error: any) {
       return {
@@ -117,7 +118,8 @@ export const listScrapersTool = {
     return {
       success: true,
       count: files.length,
-      scrapers: files
+      scrapers: files,
+      current_working_directory: baseDir
     };
   }
 };
@@ -126,7 +128,7 @@ export const runScraperTool = {
   name: 'run_scraper',
   description: 'Execute a saved scraper and get fresh data. ALWAYS run this after save_scraper to verify the scraper works correctly.',
   inputSchema: z.object({
-    name: z.string().describe('Name of the scraper to run (e.g., "eurovision_melodifestivalen_2026"). Do not include .ts extension.'),
+    name: z.string().describe('Name of the scraper to run (e.g., "worldcup_odds_2026"). Do not include .ts extension.'),
     directory: z.string().optional().describe('Optional: absolute path where scrapers are stored. Defaults to the current project\'s root directory.')
   }),
   handler: async (params: { name: string; directory?: string }) => {
@@ -183,7 +185,8 @@ export const runScraperTool = {
             success: true,
             message: `Scraper executed successfully. Retrieved data from ${files[0]}`,
             data_file: latestFile,
-            data: jsonData
+            data: jsonData,
+            current_working_directory: baseDir
         };
 
     } catch (error: any) {
