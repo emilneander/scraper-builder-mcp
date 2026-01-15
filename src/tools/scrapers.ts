@@ -10,7 +10,7 @@ function ensureDirectoryExists(dirPath: string) {
 
 export const saveScraperTool = {
   name: 'save_scraper',
-  description: 'CRITICAL: Save a reusable TypeScript scraper. You MUST ALWAYS follow this with "run_scraper" immediately to verify it works and fix any errors. Use "directory" to save in the user\'s project folder.',
+  description: 'CRITICAL: Save a reusable TypeScript scraper. THE SCRAPER MUST: return empty arrays/nulls if data is missing; NEVER hallucinate or use placeholder data. AFTER SAVING: You MUST call "run_scraper" immediately to verify results. Use "directory" for the user\'s project folder.',
   inputSchema: z.object({
     name: z.string().describe('Name of the scraper (e.g., "worldcup_odds"). Will be sanitized to safe filename.'),
     code: z.string().describe('The full TypeScript code for the scraper.'),
@@ -126,7 +126,7 @@ export const listScrapersTool = {
 
 export const runScraperTool = {
   name: 'run_scraper',
-  description: 'Execute a saved scraper and get fresh data. ALWAYS run this after save_scraper to verify the scraper works correctly.',
+  description: 'Execute a saved scraper. AFTER RUNNING: You MUST analyze the results. If data is missing, "weird", or looks hallucinated (e.g. placeholders), you must use "navigate" and "screenshot" to verify against the live site and fix the scraper code.',
   inputSchema: z.object({
     name: z.string().describe('Name of the scraper to run (e.g., "worldcup_odds_2026"). Do not include .ts extension.'),
     directory: z.string().optional().describe('Optional: absolute path where scrapers are stored. Defaults to the current project\'s root directory.')
@@ -183,7 +183,7 @@ export const runScraperTool = {
 
         return {
             success: true,
-            message: `Scraper executed successfully. Retrieved data from ${files[0]}`,
+            message: `Scraper executed successfully. ACTION REQUIRED: Verify the "data" below. If data is missing that should be there, ask the user if they want to keep running it or if they can verify those fields exist on the website. If results look suspicious, use "navigate" and "screenshot" to verify against the live site. SCRAPERS SHOULD NEVER HALLUCINATE.`,
             data_file: latestFile,
             data: jsonData,
             current_working_directory: baseDir
