@@ -56,20 +56,24 @@ Add to your MCP config (Claude Desktop, Cursor, etc.):
 
 ```json
 {
-  "scraper-builder-mcp": {
-    "command": "npx",
-    "args": ["-y", "scraper-builder-mcp"]
+  "mcpServers": {
+    "scraper-builder-mcp": {
+      "command": "npx",
+      "args": ["-y", "scraper-builder-mcp"]
+    }
   }
 }
 ```
 
-To show the browser window while scraping, add:
+To show the browser window while scraping:
 ```json
 {
-  "scraper-builder-mcp": {
-    "command": "npx",
-    "args": ["-y", "scraper-builder-mcp"],
-    "env": { "HEADED": "true" }
+  "mcpServers": {
+    "scraper-builder-mcp": {
+      "command": "npx",
+      "args": ["-y", "scraper-builder-mcp"],
+      "env": { "HEADED": "true" }
+    }
   }
 }
 ```
