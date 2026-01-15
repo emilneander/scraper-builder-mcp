@@ -10,7 +10,7 @@ function ensureDirectoryExists(dirPath: string) {
 
 export const saveScraperTool = {
   name: 'save_scraper',
-  description: 'Save a reusable TypeScript scraper script. After saving, ALWAYS use run_scraper to test it. IMPORTANT: The AI should check its current project path (e.g. via pwd or file paths) and pass it to the "directory" parameter to ensure the scraper is saved in the correct project folder.',
+  description: 'CRITICAL: Save a reusable TypeScript scraper. You MUST ALWAYS follow this with "run_scraper" immediately to verify it works and fix any errors. Use "directory" to save in the user\'s project folder.',
   inputSchema: z.object({
     name: z.string().describe('Name of the scraper (e.g., "worldcup_odds"). Will be sanitized to safe filename.'),
     code: z.string().describe('The full TypeScript code for the scraper.'),
@@ -75,7 +75,7 @@ This is required for the "run_scraper" tool to find your data.`;
 
       return {
         success: true,
-        message: `Scraper saved to ${filePath}`,
+        message: `Scraper saved to ${filePath}. NEXT STEP: You MUST now call "run_scraper" with name "${safeName}" to verify the scraper works correctly in this environment.`,
         validation_status: validation,
         path: filePath,
         current_working_directory: baseDir

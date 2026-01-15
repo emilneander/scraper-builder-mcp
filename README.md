@@ -24,7 +24,7 @@ The AI will:
 2. Explore the DOM to find the right selectors
 3. Write a TypeScript scraper that outputs your schema
 4. Save it to your project folder
-5. Run it to verify it works (and fix if needed)
+5. **CRITICAL:** Run it immediately to verify it works (and fix if needed)
 
 **Tips:**
 - If your IDE has built-in browser tools, say **"use scraper-builder-mcp"** explicitly
